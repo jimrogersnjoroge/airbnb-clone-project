@@ -219,7 +219,7 @@ A well-structured database is fundamental to the functionality of the AirBnB Clo
     * A `Payment` belongs to one `Booking`.
     * *Relationship Type: One-to-One (or One-to-Many if installments are tracked individually) (Booking to Payments)*
 
-# Your Project Title
+
 
 ## Feature Breakdown
 
@@ -249,7 +249,6 @@ Integrates secure methods for handling financial transactions related to booking
 
 Implements a system for sending alerts and facilitating communication between users (e.g., booking confirmations, messages between owners and guests). This keeps users informed and enables necessary interactions within the platform. 
 
-# Your Project Title
 
 ## API Security
 
@@ -286,7 +285,7 @@ Securing the backend APIs is paramount to protecting sensitive data, maintaining
 
 Implementing these security measures is a continuous process and a fundamental requirement for building a reliable and trustworthy platform.
 
-# Your Project Title
+
 
 ## CI/CD Pipeline
 
