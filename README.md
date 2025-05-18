@@ -88,3 +88,47 @@ Understanding the various roles within a software development project is crucial
         * Automating tests where possible to improve the CI/CD process.
 
 This list provides a foundational understanding. In real-world scenarios, and particularly in smaller teams or learning projects, individuals often take on multiple roles. The key is ensuring all these responsibilities are covered to build a robust and scalable application.
+
+
+## Technology Stack
+
+This project will leverage a modern technology stack designed for building scalable and robust web applications. The core technologies are:
+
+1.  **Django:**
+    * **Purpose:** Django is a high-level Python web framework that enables rapid development of secure and maintainable websites. In this project, it will be the backbone of our backend system, used for:
+        * Building the server-side logic for user authentication, property listings, booking management, and other core features.
+        * Developing RESTful APIs or integrating with GraphQL to expose data to potential frontend applications or other services.
+        * Handling HTTP requests and responses.
+        * Interacting with the database through its ORM (Object-Relational Mapper).
+
+2.  **MySQL:**
+    * **Purpose:** MySQL is a popular open-source relational database management system (RDBMS). It will be used as the primary data store for the AirBnB Clone project to:
+        * Store all persistent data, including user profiles, property details, booking information, reviews, availability, and more.
+        * Ensure data integrity, consistency, and reliability through a structured schema.
+        * Allow for efficient querying and retrieval of data.
+
+3.  **GraphQL:**
+    * **Purpose:** GraphQL is a query language for APIs and a server-side runtime for executing those queries by using a type system you define for your data. Its role in this project will be to:
+        * Provide a flexible and efficient way for client applications (e.g., a web or mobile frontend) to request exactly the data they need, reducing over-fetching and under-fetching of data.
+        * Define a clear schema for the data available through the API.
+        * Enable a more modern API interaction compared to traditional REST APIs for certain use cases.
+
+4.  **Docker:**
+    * **Purpose:** Docker is a platform for developing, shipping, and running applications in containers. While listed as a tool to be "comfortable with," its integration offers significant benefits:
+        * Ensuring consistency across development, testing, and production environments.
+        * Simplifying dependency management by packaging the application and all its dependencies together.
+        * Facilitating easier setup and deployment of the application.
+
+5.  **GitHub Actions (CI/CD):**
+    * **Purpose:** GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows for automation of the software development workflow. In this project, it will be used to:
+        * Automate the building of the application whenever changes are pushed to the repository.
+        * Run automated tests to ensure code quality and catch regressions early.
+        * Automate the deployment of the application to staging or production environments, ensuring efficient and error-minimized releases.
+
+6.  **Git & GitHub:**
+    * **Purpose:**
+        * **Git:** A distributed version control system for tracking changes in source code during software development. It allows for branching, merging, and managing different versions of the codebase.
+        * **GitHub:** A platform for hosting Git repositories and providing collaboration tools. It will be used for:
+            * Centralized project repository management.
+            * Collaborative development, including pull requests and code reviews.
+            * Issue tracking and project management.
