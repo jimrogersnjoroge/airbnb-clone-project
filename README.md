@@ -132,3 +132,90 @@ This project will leverage a modern technology stack designed for building scala
             * Centralized project repository management.
             * Collaborative development, including pull requests and code reviews.
             * Issue tracking and project management.
+## Database Design
+
+A well-structured database is fundamental to the functionality of the AirBnB Clone. This section outlines the key entities, their attributes, and the relationships between them. We will be using MySQL, a relational database system.
+
+### Key Entities & Fields
+
+1.  **Users:** Represents individuals who can list properties or book them.
+    * `user_id` (Primary Key, INT, Auto Increment)
+    * `username` (VARCHAR(255), Unique, Not Null)
+    * `email` (VARCHAR(255), Unique, Not Null)
+    * `password_hash` (VARCHAR(255), Not Null)
+    * `created_at` (TIMESTAMP, Default CURRENT_TIMESTAMP)
+    * `profile_picture_url` (VARCHAR(255), Nullable)
+    * `bio` (TEXT, Nullable)
+
+2.  **Properties:** Represents the accommodations listed on the platform.
+    * `property_id` (Primary Key, INT, Auto Increment)
+    * `owner_id` (Foreign Key referencing `Users(user_id)`, INT, Not Null)
+    * `title` (VARCHAR(255), Not Null)
+    * `description` (TEXT, Not Null)
+    * `address` (VARCHAR(255), Not Null)
+    * `city` (VARCHAR(100), Not Null)
+    * `country` (VARCHAR(100), Not Null)
+    * `price_per_night` (DECIMAL(10, 2), Not Null)
+    * `property_type` (VARCHAR(50)) // e.g., Apartment, House, Room
+    * `max_guests` (INT, Not Null)
+    * `num_bedrooms` (INT, Default 0)
+    * `num_bathrooms` (INT, Default 0)
+    * `created_at` (TIMESTAMP, Default CURRENT_TIMESTAMP)
+
+3.  **Bookings:** Represents a reservation made by a user for a property.
+    * `booking_id` (Primary Key, INT, Auto Increment)
+    * `user_id` (Foreign Key referencing `Users(user_id)`, INT, Not Null)
+    * `property_id` (Foreign Key referencing `Properties(property_id)`, INT, Not Null)
+    * `start_date` (DATE, Not Null)
+    * `end_date` (DATE, Not Null)
+    * `num_guests` (INT, Not Null)
+    * `total_price` (DECIMAL(10, 2), Not Null)
+    * `booking_status` (VARCHAR(50), Default 'pending') // e.g., pending, confirmed, cancelled, completed
+    * `booked_at` (TIMESTAMP, Default CURRENT_TIMESTAMP)
+
+4.  **Reviews:** Represents feedback provided by users for properties they have booked.
+    * `review_id` (Primary Key, INT, Auto Increment)
+    * `booking_id` (Foreign Key referencing `Bookings(booking_id)`, INT, Unique, Not Null) // Assuming one review per booking
+    * `user_id` (Foreign Key referencing `Users(user_id)`, INT, Not Null) // The user who wrote the review
+    * `property_id` (Foreign Key referencing `Properties(property_id)`, INT, Not Null) // The property being reviewed
+    * `rating` (INT, Not Null) // e.g., 1 to 5 stars
+    * `comment` (TEXT, Nullable)
+    * `created_at` (TIMESTAMP, Default CURRENT_TIMESTAMP)
+
+5.  **Payments:** Represents payment transactions related to bookings.
+    * `payment_id` (Primary Key, INT, Auto Increment)
+    * `booking_id` (Foreign Key referencing `Bookings(booking_id)`, INT, Not Null)
+    * `amount` (DECIMAL(10, 2), Not Null)
+    * `payment_date` (TIMESTAMP, Default CURRENT_TIMESTAMP)
+    * `payment_status` (VARCHAR(50), Not Null) // e.g., pending, successful, failed
+    * `payment_method_details` (VARCHAR(255), Nullable) // e.g., card type, transaction ID
+    * `transaction_id` (VARCHAR(255), Unique, Nullable)
+
+### Entity Relationships
+
+* **Users and Properties:**
+    * A `User` (as an owner) can have multiple `Properties`.
+    * A `Property` belongs to one `User` (owner).
+    * *Relationship Type: One-to-Many (User to Properties)*
+
+* **Users and Bookings:**
+    * A `User` can make multiple `Bookings`.
+    * A `Booking` is made by one `User`.
+    * *Relationship Type: One-to-Many (User to Bookings)*
+
+* **Properties and Bookings:**
+    * A `Property` can have multiple `Bookings`.
+    * A `Booking` is for one `Property`.
+    * *Relationship Type: One-to-Many (Property to Bookings)*
+
+* **Users, Properties, and Reviews (via Bookings):**
+    * A `User` can write multiple `Reviews` (for different bookings).
+    * A `Property` can receive multiple `Reviews` (from different bookings).
+    * A `Review` is linked to one specific `Booking`, which in turn links to the `User` who made the booking (and is writing the review) and the `Property` that was booked.
+    * *Relationship Type: A `Booking` has one `Review` (One-to-One, if one review per booking). A `User` is linked to `Review` (One-to-Many). A `Property` is linked to `Review` (One-to-Many).*
+
+* **Bookings and Payments:**
+    * A `Booking` typically has one `Payment` record associated with it (though this could be designed as One-to-Many if partial payments were allowed). For simplicity, we'll start with One-to-One or a tightly coupled One-to-Many where one booking results in one primary payment transaction.
+    * A `Payment` belongs to one `Booking`.
+    * *Relationship Type: One-to-One (or One-to-Many if installments are tracked individually) (Booking to Payments)*
+
